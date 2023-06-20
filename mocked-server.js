@@ -7,6 +7,8 @@ const userdb = require('./db.json')
 const server = jsonServer.create()
 const middlewares = jsonServer.defaults()
 
+server.use(bodyParser.urlencoded({ extended: true }))
+server.use(bodyParser.json())
 const router = jsonServer.router(path.join(__dirname, 'db.json'))
 
 const SECRET_KEY = '123456789'
@@ -46,9 +48,9 @@ server.use(/^(?!\/login).*$/, (req, res, next) => {
 })
 
 server.use('/api', router)
-server.post('/api/login', (req, res) => {
+server.post('/login', (req, res) => {
   const { email, password } = req.body
-  console.log('req body:', req.body);
+
   if (isAuthenticated({ email, password }) === false) {
     const status = 401
     const message = 'Incorrect email or password'

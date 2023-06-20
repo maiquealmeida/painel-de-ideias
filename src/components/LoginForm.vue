@@ -1,22 +1,40 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import AuthService from '@/services/AuthService';
 
+const emailRef = ref<HTMLInputElement | null>(null)
+const passwordRef = ref<HTMLInputElement | null>(null)
+
+function handleFormSubmit(event: Event) {
+  event.preventDefault();
+
+  if(!emailRef.value || !passwordRef.value) {
+    return false;
+  }
+
+  AuthService.login(emailRef.value.value, passwordRef.value.value)
+}
 </script>
 
 <template>
-  <form method="post">
+  <form method="post" @submit="handleFormSubmit">
     <div class="box">
       <h1>Login</h1>
-      <input 
+      <input
+        ref="emailRef" 
         type="email" 
         name="email" 
+        autocomplete="off"
       />
       <input 
+        ref="passwordRef" 
         type="password" 
-        name="email" 
+        name="password"
+        autocomplete="off"
       />
         
       <div class="footer">
-        <button>
+        <button type="submit">
           Entrar
         </button> 
         
@@ -29,7 +47,7 @@
   </form>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 p {
   font-size:12px;
   text-decoration: none;
@@ -46,6 +64,41 @@ h1 {
   border-radius: 6px;
   margin: 0 auto 0 auto;
   padding: 16px;
+
+
+  input {
+    border-radius:4px;
+    background:#ecf0f1;
+    border: #ccc 1px solid;
+    padding: 8px;
+    width: 100%;
+    font-size:1em;
+    margin-bottom: 4px;
+    border-radius:4px;
+  }
+
+
+  button {
+    background:#2ecc71;
+    width: 125px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color:white;
+    border-radius: 4px;
+    border: #27ae60 1px solid;   
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 0px;
+    font-weight:800;
+    font-size:0.8em;
+  }
+
+
+
+  button:first-child {
+    margin-right: 4px;
+  }
+
 }
 
 
@@ -54,37 +107,6 @@ h1 {
   justify-content: space-between;
 }
 
-
-input {
-  border-radius:4px;
-  background:#ecf0f1;
-  border: #ccc 1px solid;
-  padding: 8px;
-  width: 100%;
-  font-size:1em;
-  margin-bottom: 4px;
-  border-radius:4px;
-}
-
-button {
-  background:#2ecc71;
-  width: 125px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  color:white;
-  border-radius: 4px;
-  border: #27ae60 1px solid;
-  
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-right: 0px;
-  font-weight:800;
-  font-size:0.8em;
-}
-
-button:first-child {
-  margin-right: 4px;
-}
 
 a { 
   color: #e0e0e0;

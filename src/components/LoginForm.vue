@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import AuthService from '@/services/AuthService';
+import { useAuthStore } from '@/stores';
 
 const emailRef = ref<HTMLInputElement | null>(null)
 const passwordRef = ref<HTMLInputElement | null>(null)
+const authStore = useAuthStore();
 
 function handleFormSubmit(event: Event) {
   event.preventDefault();
@@ -12,7 +13,7 @@ function handleFormSubmit(event: Event) {
     return false;
   }
 
-  AuthService.login(emailRef.value.value, passwordRef.value.value)
+  authStore.login(emailRef.value.value, passwordRef.value.value).catch(err => console.log(err));
 }
 </script>
 
@@ -25,12 +26,14 @@ function handleFormSubmit(event: Event) {
         type="email" 
         name="email" 
         autocomplete="off"
+        value="test@email.com"
       />
       <input 
         ref="passwordRef" 
         type="password" 
         name="password"
         autocomplete="off"
+        value="1234567"
       />
         
       <div class="footer">

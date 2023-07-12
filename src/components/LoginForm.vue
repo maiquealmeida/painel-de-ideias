@@ -7,26 +7,21 @@ const emailRef = ref<HTMLInputElement | null>(null)
 const passwordRef = ref<HTMLInputElement | null>(null)
 const authStore = useAuthStore();
 
- async function handleFormSubmit(event: Event) {
+ function handleFormSubmit(event: Event) {
   event.preventDefault();
 
   if(!emailRef.value || !passwordRef.value) {
     return false;
   }
 
-  //  authStore.login(emailRef.value.value, passwordRef.value.value)
-  //   .then(() => {
-  //     router.push({name: 'home'});
-  //   })
-  //   .catch(err => {
-  //     console.log('Erro no login: ', err)
-  //   });
-
-
+   authStore.login(emailRef.value.value, passwordRef.value.value)
+    .then(() => {
+      router.push({name: 'home'});
+    })
+    .catch(err => {
+      console.log('Erro no login: ', err)
+    });
   
-  await authStore.login(emailRef.value.value, passwordRef.value.value)
-   
-  await router.push({name: 'home'});
 }
 </script>
 

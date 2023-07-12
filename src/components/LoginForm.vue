@@ -1,19 +1,32 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores';
+import router from '@/router';
 
 const emailRef = ref<HTMLInputElement | null>(null)
 const passwordRef = ref<HTMLInputElement | null>(null)
 const authStore = useAuthStore();
 
-function handleFormSubmit(event: Event) {
+ async function handleFormSubmit(event: Event) {
   event.preventDefault();
 
   if(!emailRef.value || !passwordRef.value) {
     return false;
   }
 
-  authStore.login(emailRef.value.value, passwordRef.value.value).catch(err => console.log(err));
+  //  authStore.login(emailRef.value.value, passwordRef.value.value)
+  //   .then(() => {
+  //     router.push({name: 'home'});
+  //   })
+  //   .catch(err => {
+  //     console.log('Erro no login: ', err)
+  //   });
+
+
+  
+  await authStore.login(emailRef.value.value, passwordRef.value.value)
+   
+  await router.push({name: 'home'});
 }
 </script>
 

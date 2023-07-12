@@ -1,10 +1,18 @@
+<script setup lang="ts">
+  import { useAuthStore } from '@/stores/useAuthStore'
+  const authStore = useAuthStore();
+</script>
+
 <template>
   <header>
     <div class="wrapper">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/">Inicio</RouterLink>
+        <RouterLink to="/home">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/login">Entrar</RouterLink>
+        <RouterLink to="/login" v-if="!authStore.accessToken">Entrar</RouterLink>
+        <RouterLink to="/logout" v-if="!!authStore.accessToken">Sair</RouterLink>
+
       </nav>
     </div>
   </header>

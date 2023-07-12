@@ -45,5 +45,15 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { accessToken, setUser, user, setToken, login, rehydratate }
+  async function logout() {
+    try {
+      setToken(null);
+      localStorage.removeItem('accessToken');
+
+    } catch (err) {
+      // TODO handle error
+    }
+  }
+
+  return { accessToken, setUser, user, setToken, login, logout, rehydratate }
 })
